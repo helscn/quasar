@@ -1,143 +1,82 @@
 <template>
   <q-layout>
-    <q-page-container>
-      <q-page docs-input row justify-center>
-        <div id="container" class="fullscreen">
-          <div id="form" class="fixed-center">
-            <h5>登录</h5>
-            <!-- <q-field
-              icon="person"
-              :count="20"
-              label="用户名"
-              helper="请输入登录用户名"
-              error="mailHasError"
-              error-label="We need a valid email"
-            > -->
-            <q-input
-              :before="[
-                {
-                  icon: 'person',
-                  content: true,
-                  handler() {
-                    // do something...
-                  }
-                }
-              ]"
-              v-model="username"
-              placeholder="请输入用户名..."
-              clearable="True"
-            />
-            <!-- </q-field> -->
-            <q-field label="密码" helper="请输入您的密码">
-              <q-input
-                type="password"
-                max-length="16"
-                v-model="password"
-                clearable="True"
-              />
-            </q-field>
-            <q-field
-              icon="card_travel"
-              label="Travel card"
-              helper="Some helper"
-            >
-              <q-input
-                v-model="username"
-                icon="person"
-                float-label="Float label"
-              />
-            </q-field>
-          </div>
-        </div>
-      </q-page>
-    </q-page-container>
+    <q-page class="fullscreen bg-grey-7 row">
+        <q-card class="absolute-center col-xs-12 col-md-4">
+          <q-card-section>
+            <q-tabs v-model="tab" inline-label class="text-teal">
+              <q-tab name="login" icon="face" label="登录" />
+              <q-tab name="register" icon="how_to_reg" label="注册" />
+            </q-tabs>
+          </q-card-section>
+          <q-card-section>
+            <q-form class="">
+                <div>
+                  <q-input
+                    bottom-slots
+                    v-model="classForm.username"
+                    label="用户名"
+                    counter
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="person" />
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        name="close"
+                        @click="classForm.username = ''"
+                        class="cursor-pointer"
+                      />
+                    </template>
+                  </q-input>
+                  <q-input
+                    type="password"
+                    bottom-slots
+                    v-model="classForm.password"
+                    label="密码"
+                    counter
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="lock" />
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        name="close"
+                        @click="classForm.password = ''"
+                        class="cursor-pointer"
+                      />
+                    </template>
+                  </q-input>
+              </div>
+            </q-form>
+          </q-card-section>
+          <q-card-actions class="float-right">
+            <q-btn color="primary" icon="login" label="登录" v-show="isLogin" />
+            <q-btn  color="primary" icon="send" label="注册" v-show="!isLogin" />
+          </q-card-actions>
+        </q-card>
+    </q-page>
   </q-layout>
 </template>
 
-<style scoped>
-#form {
-  margin-top: -50px;
-}
-</style>
-
 <script>
 export default {
-  methods: {
-    ToLogin: function() {
-      this.showLogin = true;
-      this.showRegister = false;
-    },
-    ToRegister: function() {
-      this.showLogin = false;
-      this.showRegister = true;
-    },
-    login: function() {
-      let _this = this;
-
-      /////判读账号密码是否输入，没有则alert 出来
-      if (this.username === "" || this.password === "") {
-        alert("账号或密码不能为空");
-      } else {
-        this.$axios({
-          method: "post",
-          url: "/login",
-          data: {
-            username: _this.username,
-            password: _this.password
-          }
-        })
-          .then(res => {
-            let token = res.data.token;
-            console.log(token);
-            // 将用户token保存到vuex中
-            _this.$store.commit("changeLogin", {
-              Token: token
-            });
-            this.$q.notify({
-              message: "欢迎",
-              type: "positive",
-              detail: "登陆成功，正常跳转至主页...",
-              position: "center"
-            });
-            _this.$router.push("/");
-          })
-          .catch(error => {
-            this.$q.notify({
-              message: "错误",
-              type: "negative",
-              detail: "账号或密码错误！",
-              position: "center"
-            });
-            _this.$store.commit("changeLogin", {
-              Token: ""
-            });
-            _this.$router.push("/login");
-          });
-      }
-    },
-    register: function() {
-      let _this = this;
-      this.$axios({
-        method: "get",
-        url: "/gettoken"
-      }).then(res => {
-        alert(res.data);
-      });
-    }
-  },
   data() {
     return {
-      // count: 20,
-      showLogin: true,
-      showRegister: false,
-      showTishi: false,
-      tishi: "",
-      username: "",
-      password: "",
-      newUsername: "",
-      newPassword: "",
-      token: ""
+      tab: "login",
+      visible: true,
+      classForm: {
+        username: "",
+        password: ""
+      },
+      userToken: ""
     };
+  },
+
+  methods: {},
+  computed: {
+    isLogin: function() {
+      return this.tab === "login" ? true : false;
+    }
   }
 };
 </script>

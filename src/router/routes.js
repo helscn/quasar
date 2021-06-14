@@ -12,7 +12,6 @@ const routes = [
     path: '/login',
     component:()=>import('src/pages/login.vue')
   },
-
   {
     path: '/table',
     component: () => import('layouts/TableLayout.vue'),
