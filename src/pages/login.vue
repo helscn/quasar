@@ -1,7 +1,7 @@
 <template>
   <q-layout>
-    <q-page class="fullscreen bg-grey-7 row">
-      <q-card class="absolute-center col-xs-12 col-md-4">
+    <q-page class="fullscreen row" style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)">
+      <q-card bordered class="absolute-center col-xs-12 col-md-4 shadow-16 bg-grey-3">
         <q-card-section>
           <q-tabs v-model="tab" inline-label class="text-teal">
             <q-tab name="login" icon="face" label="登录" />
