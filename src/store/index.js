@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import example from './module-example'
+import auth from './auth'
 
 Vue.use(Vuex)
 
@@ -16,17 +17,12 @@ Vue.use(Vuex)
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
-    // modules: {
-    //   // example
-    // },
+    modules: {
+      auth
+    },
     state:{
-      Token: localStorage.getItem('Token') ? localStorage.getItem('Token') : ''
     },
     mutations: {
-       changeLogin (state, user) {
-        state.Token = user.Token;
-        localStorage.setItem('Token', user.Token);
-      }
     },
 
     // enable strict mode (adds overhead!)

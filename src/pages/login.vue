@@ -1,66 +1,138 @@
 <template>
   <q-layout>
-    <q-page class="fullscreen row" style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)">
-      <q-card bordered class="absolute-center col-xs-12 col-md-4 shadow-16 bg-grey-3">
-        <q-card-section>
-          <q-tabs v-model="tab" inline-label class="text-teal">
-            <q-tab name="login" icon="face" label="登录" />
-            <q-tab name="register" icon="how_to_reg" label="注册" />
+    <q-page-container>
+      <q-page
+        class="fullscreen row"
+        style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
+      >
+        <q-card
+          bordered
+          class="absolute-center col-xs-12 col-sm-8 col-md-5 col-lg-4 col-xl-3 shadow-16 bg-grey-3"
+        >
+          <q-tabs v-model="tabName">
+            <q-tab name="login" icon="face" label="登录" tabindex="-1" />
+            <q-tab
+              v-if="true"
+              name="register"
+              icon="how_to_reg"
+              label="注册"
+              tabindex="-1"
+            />
           </q-tabs>
-        </q-card-section>
-        <q-card-section>
-          <q-form class="">
-            <div>
-              <q-input
-                bottom-slots
-                v-model="classForm.username"
-                label="用户名"
-                counter
-              >
-                <template v-slot:prepend>
-                  <q-icon name="person" />
-                </template>
-
-                <template v-slot:append>
-                  <q-icon
-                    name="close"
-                    @click="classForm.username = ''"
-                    class="cursor-pointer"
-                  />
-                </template>
-              </q-input>
-              <q-input
-                :type="classForm.isPwd ? 'password' : 'text'"
-                bottom-slots
-                v-model="classForm.password"
-                label="密码"
-                counter
-              >
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    :name="classForm.isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="classForm.isPwd = !classForm.isPwd"
-                  />
-                  <q-icon
-                    name="close"
-                    @click="classForm.password = ''"
-                    class="cursor-pointer"
-                  />
-                </template>
-              </q-input>
-            </div>
-          </q-form>
-        </q-card-section>
-        <q-card-actions class="justify-end">
-          <q-btn color="primary" icon="login" label="登录" v-show="isLogin" />
-          <q-btn color="primary" icon="send" label="注册" v-show="!isLogin" />
-        </q-card-actions>
-      </q-card>
-    </q-page>
+          <q-separator />
+          <q-tab-panels v-model="tabName" animated style="min-height:300px">
+            <q-tab-panel name="login">
+              <div class="q-my-md">
+                <q-input
+                  bottom-slots
+                  clearable
+                  v-model="loginForm.username"
+                  label="用户名"
+                  :rules="[val => !!val || '必须输入用户名']"
+                  counter
+                  :loading="isLoading"
+                  tabindex="1"
+                  @keyup.enter="login"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="person" />
+                  </template>
+                </q-input>
+                <q-input
+                  :type="loginForm.showPassword ? 'text' : 'password'"
+                  bottom-slots
+                  clearable
+                  v-model="loginForm.password"
+                  :rules="[val => val.length >= 6 || '密码长度必须大于等于6']"
+                  label="密码"
+                  counter
+                  :loading="isLoading"
+                  tabindex="2"
+                  @keyup.enter="login"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="
+                        loginForm.showPassword ? 'visibility' : 'visibility_off'
+                      "
+                      class="cursor-pointer"
+                      @click="loginForm.showPassword = !loginForm.showPassword"
+                      tabindex="-1"
+                    />
+                  </template>
+                </q-input>
+              </div>
+              <q-card-actions class="justify-end q-ma-md">
+                <q-btn
+                  color="primary"
+                  icon="login"
+                  label="登录"
+                  tabindex="3"
+                  @click="login"
+                />
+              </q-card-actions>
+            </q-tab-panel>
+            <q-tab-panel name="register">
+              <div class="q-my-md">
+                <q-input
+                  bottom-slots
+                  clearable
+                  v-model="loginForm.username"
+                  label="用户名"
+                  :rules="[val => !!val || '必须输入用户名']"
+                  counter
+                  :loading="isLoading"
+                  tabindex="1"
+                  @keyup.enter="register"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="person" />
+                  </template>
+                </q-input>
+                <q-input
+                  :type="loginForm.showPassword ? 'text' : 'password'"
+                  bottom-slots
+                  clearable
+                  v-model="loginForm.password"
+                  :rules="[val => val.length >= 6 || '密码长度必须大于等于6']"
+                  label="密码"
+                  counter
+                  :loading="isLoading"
+                  tabindex="2"
+                  @keyup.enter="register"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="
+                        loginForm.showPassword ? 'visibility' : 'visibility_off'
+                      "
+                      class="cursor-pointer"
+                      @click="loginForm.showPassword = !loginForm.showPassword"
+                      tabindex="-1"
+                    />
+                  </template>
+                </q-input>
+              </div>
+              <q-card-actions class="justify-end q-ma-md">
+                <q-btn
+                  color="primary"
+                  icon="send"
+                  label="注册"
+                  tabindex="3"
+                  @click="register"
+                />
+              </q-card-actions>
+            </q-tab-panel>
+          </q-tab-panels>
+        </q-card>
+      </q-page>
+    </q-page-container>
   </q-layout>
 </template>
 
@@ -68,22 +140,86 @@
 export default {
   data() {
     return {
-      tab: "login",
-      visible: true,
-      classForm: {
+      tabName: "login",
+      isLoading: false,
+      loginForm: {
         username: "",
         password: "",
-        isPwd: true
+        showPassword: false
       },
       userToken: ""
     };
   },
 
-  methods: {},
-  computed: {
-    isLogin: function() {
-      return this.tab === "login" ? true : false;
+  methods: {
+    login: function() {
+      let _this = this;
+
+      /////判读账号密码是否输入
+      if (!_this.loginForm.username || _this.loginForm.password.length < 6) {
+        _this.$q.notify({
+          type: "warning",
+          position: "center",
+          icon: "warning",
+          message: "账号名或密码长度不满足要求!",
+          timeout: 300
+        });
+      } else {
+        _this.isLoading = true;
+        _this
+          .$axios({
+            method: "post",
+            url: "/auth/login",
+            data: {
+              username: _this.loginForm.username,
+              password: _this.loginForm.password
+            }
+          })
+          .then(res => {
+            _this.isLoading = false;
+            // 将用户token保存到vuex中
+            let data = res.data;
+            _this.$store.commit("auth/changeLogin", data);
+            _this.$q.notify({
+              type: "positive",
+              position: "center",
+              icon: "announcement",
+              message: "登录成功，正在跳转至主页...",
+              timeout: 500,
+              progress: true
+            });
+            setTimeout(() => {
+              _this.$router.push("/");
+            }, 1500);
+          })
+          .catch(error => {
+            _this.isLoading = false;
+            _this.$store.commit("changeLogin", {
+              userid: null,
+              username: null,
+              token: "",
+              expiration: null
+            });
+            _this.$q.notify({
+              type: "negative",
+              position: "center",
+              icon: "error",
+              message: "账号或密码错误!",
+              timeout: 300
+            });
+          });
+      }
+    },
+    register: function() {
+      let _this = this;
+      this.$axios({
+        method: "get",
+        url: "/auth/gettoken"
+      }).then(res => {
+        alert(res.data);
+      });
     }
-  }
+  },
+  computed: {}
 };
 </script>
