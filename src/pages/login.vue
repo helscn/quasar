@@ -9,7 +9,7 @@
           bordered
           class="absolute-center col-xs-12 col-sm-8 col-md-5 col-lg-4 col-xl-3 shadow-16 bg-grey-3"
         >
-          <q-tabs v-model="tabName">
+          <q-tabs v-model="tabName" class="text-primary">
             <q-tab name="login" icon="face" label="登录" tabindex="-1" />
             <q-tab
               v-if="true"
@@ -152,10 +152,7 @@ export default {
   },
 
   methods: {
-    login: function() {
-      let _this = this;
-
-      /////判读账号密码是否输入
+    checkInput: function() {
       if (!_this.loginForm.username || _this.loginForm.password.length < 6) {
         _this.$q.notify({
           type: "warning",
@@ -164,7 +161,15 @@ export default {
           message: "账号名或密码长度不满足要求!",
           timeout: 300
         });
+        return false;
       } else {
+        return true;
+      }
+    },
+    login: function() {
+      let _this = this;
+
+      if (_this.inputIsOk) {
         _this.isLoading = true;
         _this
           .$axios({
@@ -178,8 +183,7 @@ export default {
           .then(res => {
             _this.isLoading = false;
             // 将用户token保存到vuex中
-            let data = res.data;
-            _this.$store.commit("auth/changeLogin", data);
+            _this.$store.commit("auth/changeLogin", res.data);
             _this.$q.notify({
               type: "positive",
               position: "center",
@@ -212,14 +216,59 @@ export default {
     },
     register: function() {
       let _this = this;
-      this.$axios({
-        method: "get",
-        url: "/auth/gettoken"
-      }).then(res => {
-        alert(res.data);
-      });
+      if (_this.inputIsOk) {
+        _this.isLoading = true;
+        this.$axios({
+          method: "post",
+          url: "/api/users",
+          data: {
+            username: _this.loginForm.username,
+            password: _this.loginForm.password
+          }
+        })
+          .then(res => {
+            _this.isLoading = false;
+            _this.$store.commit("auth/changeLogin", res.data);
+            _this.$q.notify({
+              type: "positive",
+              position: "center",
+              icon: "announcement",
+              message: "登录成功，正在跳转至主页...",
+              timeout: 500,
+              progress: true
+            });
+            setTimeout(() => {
+              _this.$router.push("/");
+            }, 1500);
+          })
+          .catch(error => {
+            _this.isLoading = false;
+            _this.$q.notify({
+              type: "negative",
+              position: "center",
+              icon: "error",
+              message: "账号注册失败!",
+              timeout: 1000
+            });
+          });
+      }
     }
   },
-  computed: {}
+  computed: {
+    inputIsOk: function() {
+      if (!this.loginForm.username || this.loginForm.password.length < 6) {
+        this.$q.notify({
+          type: "warning",
+          position: "center",
+          icon: "warning",
+          message: "账号名或密码长度不满足要求!",
+          timeout: 300
+        });
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
 };
 </script>
