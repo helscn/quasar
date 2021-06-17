@@ -7,9 +7,9 @@
       >
         <q-card
           bordered
-          class="absolute-center col-xs-12 col-sm-8 col-md-5 col-lg-4 col-xl-3 shadow-16 bg-grey-3"
+          class="absolute-center col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 shadow-16 bg-grey-3"
         >
-          <q-tabs v-model="tabName" class="text-primary">
+          <q-tabs v-model="tabName" inline-label class="text-primary">
             <q-tab name="login" icon="face" label="登录" tabindex="-1" />
             <q-tab
               v-show="false"
@@ -20,9 +20,9 @@
             />
           </q-tabs>
           <q-separator />
-          <q-tab-panels v-model="tabName" animated style="min-height:300px">
+          <q-tab-panels v-model="tabName" animated>
             <q-tab-panel name="login">
-              <div class="q-my-md">
+              <div>
                 <q-input
                   bottom-slots
                   clearable
@@ -65,7 +65,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-card-actions class="justify-end q-ma-md">
+              <q-card-actions class="justify-end">
                 <q-btn
                   color="primary"
                   icon="login"
@@ -76,7 +76,7 @@
               </q-card-actions>
             </q-tab-panel>
             <q-tab-panel name="register">
-              <div class="q-my-md">
+              <div>
                 <q-input
                   bottom-slots
                   clearable
@@ -119,7 +119,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-card-actions class="justify-end q-ma-md">
+              <q-card-actions class="justify-end">
                 <q-btn
                   color="primary"
                   icon="send"
