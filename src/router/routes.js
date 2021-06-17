@@ -10,7 +10,7 @@ const routes = [
 
   {
     path: '/login',
-    component:()=>import('src/pages/login.vue')
+    component:()=>import('src/pages/Login.vue')
   },
   {
     path: '/table',

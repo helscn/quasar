@@ -1,8 +1,11 @@
 export default function () {
   return {
-    userid: null,
-    username: null,
-    token: localStorage.getItem('Token') ? localStorage.getItem('Token') : '',
-    expiration: null
+    id: '',
+    name: '',
+    title:'',
+    department:'',
+    phone:'',
+    email:'',
+    token: localStorage.getItem('Token') ? localStorage.getItem('Token') : ''
   }
 }

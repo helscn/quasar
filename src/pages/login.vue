@@ -12,7 +12,7 @@
           <q-tabs v-model="tabName" class="text-primary">
             <q-tab name="login" icon="face" label="登录" tabindex="-1" />
             <q-tab
-              v-if="true"
+              v-show="false"
               name="register"
               icon="how_to_reg"
               label="注册"
