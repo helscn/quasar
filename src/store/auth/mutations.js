@@ -5,7 +5,8 @@ export function changeLogin (state,user) {
     state.department=user.department;
     state.phone=user.phone;
     state.email=user.email;
-    state.token=user.token;
+    state.token = user.token;
+    localStorage.setItem('Token',user.token)
 }
 
 export function logout(state){

@@ -32,7 +32,7 @@ export default function (/* { store, ssrContext } */) {
       next();
     } else {
       let token = localStorage.getItem('Token');
-      if (token === null || token === '') {
+      if (!token) {
         next('/login');
       } else {
         next();

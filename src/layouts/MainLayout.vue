@@ -14,19 +14,31 @@
     </q-header>
 
     <q-drawer show-if-above v-model="left" side="left" elevated>
-      <q-item clickable v-ripple @click="test">
-        <q-item-section>
+      <q-item clickable v-ripple>
+        <q-item-section top avatar>
           <q-avatar rounded size="48px">
             <img src="/images/Avatar.png" />
-            <q-badge floating color="teal">Admin</q-badge>
+            <!-- <q-badge floating color="teal">Admin</q-badge> -->
           </q-avatar>
         </q-item-section>
         <q-item-section>
           <q-item-label>{{ name }}</q-item-label>
-          <q-item-label caption>{{ title }}</q-item-label>
+          <q-item-label caption>{{ title }} {{ department }}</q-item-label>
         </q-item-section>
-        <q-item-section side> {{ department }}</q-item-section>
+        <q-item-section side>
+          <q-btn
+            class="glossy"
+            round
+            color="deep-orange"
+            icon="logout"
+            size="sm"
+            @click.stop="logout"
+          >
+            <q-tooltip>登出</q-tooltip>
+          </q-btn>
+        </q-item-section>
       </q-item>
+      <q-separator spaced inset />
     </q-drawer>
 
     <q-page-container>
@@ -54,6 +66,21 @@ export default {
   methods: {
     test: function() {
       alert(this.$store.state.auth.name);
+    },
+    logout: function() {
+      let _this = this;
+      _this.$q.notify({
+        type: "warning",
+        position: "center",
+        icon: "announcement",
+        message: "已登出，正在跳转至登录界面...",
+        timeout: 500,
+        progress: true
+      });
+      setTimeout(() => {
+        _this.$store.commit("auth/logout");
+        _this.$router.push("/login");
+      }, 1500);
     }
   },
   mounted: function() {
