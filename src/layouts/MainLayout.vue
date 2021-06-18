@@ -1,43 +1,32 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh lpR fFf">
+    <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
+        <q-btn dense flat round icon="menu" @click="left = !left" />
 
         <q-toolbar-title>
-          Quasar App
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
+          </q-avatar>
+          Title
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
-      <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+    <q-drawer show-if-above v-model="left" side="left" elevated>
+      <q-item clickable v-ripple @click="test">
+        <q-item-section>
+          <q-avatar rounded size="48px">
+            <img src="/images/Avatar.png" />
+            <q-badge floating color="teal">Admin</q-badge>
+          </q-avatar>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{ name }}</q-item-label>
+          <q-item-label caption>{{ title }}</q-item-label>
+        </q-item-section>
+        <q-item-section side> {{ department }}</q-item-section>
+      </q-item>
     </q-drawer>
 
     <q-page-container>
@@ -47,61 +36,35 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
+import { mapState } from "vuex";
 
 export default {
-  name: 'MainLayout',
-  components: { EssentialLink },
-  data () {
+  data() {
     return {
-      leftDrawerOpen: false,
-      essentialLinks: linksData
+      left: false
+    };
+  },
+  computed: mapState({
+    name: state => state.auth.name,
+    title: state => state.auth.title,
+    department: state => state.auth.department,
+    phone: state => state.auth.phone,
+    email: state => state.auth.email
+  }),
+  methods: {
+    test: function() {
+      alert(this.$store.state.auth.name);
     }
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      if (
+        this.$store.state.auth.name == "" &&
+        this.$store.state.auth.token != ""
+      ) {
+        this.$store.dispatch("auth/refreshLogin", this);
+      }
+    });
   }
-}
+};
 </script>

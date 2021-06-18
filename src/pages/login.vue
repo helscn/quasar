@@ -198,12 +198,7 @@ export default {
           })
           .catch(error => {
             _this.isLoading = false;
-            _this.$store.commit("changeLogin", {
-              userid: null,
-              username: null,
-              token: "",
-              expiration: null
-            });
+            _this.$store.commit("logout");
             _this.$q.notify({
               type: "negative",
               position: "center",

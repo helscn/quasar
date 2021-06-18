@@ -9,7 +9,10 @@
               <th>Caption</th>
               <th>
                 <div>
-                  Icon<img @click="showInfo" src="icons/favicon-128x128.png" />
+                  Icon<img
+                    @click="showInfo"
+                    src="~assets/quasar-logo-vertical.svg"
+                  />
                 </div>
               </th>
               <th>Link</th>

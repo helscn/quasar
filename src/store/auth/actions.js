@@ -1,6 +1,6 @@
 export function refreshLogin ({commit},that) {
     that.$axios({
-        method: "post",
+        method: "get",
         url: "/auth/gettoken"
     }).then(res=>{
         commit('changeLogin',res.data)
