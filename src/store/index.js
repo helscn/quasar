@@ -20,10 +20,6 @@ export default function (/* { ssrContext } */) {
     modules: {
       auth
     },
-    state:{
-    },
-    mutations: {
-    },
 
     // enable strict mode (adds overhead!)
     // for dev mode only

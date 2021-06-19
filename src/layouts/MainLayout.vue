@@ -12,35 +12,9 @@
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
-
-    <q-drawer show-if-above v-model="left" side="left" elevated>
-      <q-item clickable v-ripple>
-        <q-item-section top avatar>
-          <q-avatar rounded size="48px">
-            <img src="/images/Avatar.png" />
-            <!-- <q-badge floating color="teal">Admin</q-badge> -->
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ name }}</q-item-label>
-          <q-item-label caption>{{ title }} {{ department }}</q-item-label>
-        </q-item-section>
-        <q-item-section side>
-          <q-btn
-            class="glossy"
-            round
-            color="deep-orange"
-            icon="logout"
-            size="sm"
-            @click.stop="logout"
-          >
-            <q-tooltip>登出</q-tooltip>
-          </q-btn>
-        </q-item-section>
-      </q-item>
-      <q-separator spaced inset />
+    <q-drawer show-if-above v-model="left" side="left" :width="280" elevated>
+      <router-view name="sidebar" />
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -65,7 +39,7 @@ export default {
   }),
   methods: {
     test: function() {
-      alert(this.$store.state.auth.name);
+      alert(this.$store.getters["auth/isLogined"]);
     },
     logout: function() {
       let _this = this;
@@ -84,14 +58,14 @@ export default {
     }
   },
   mounted: function() {
-    this.$nextTick(function() {
-      if (
-        this.$store.state.auth.name == "" &&
-        this.$store.state.auth.token != ""
-      ) {
-        this.$store.dispatch("auth/refreshLogin", this);
-      }
-    });
+    // this.$nextTick(function() {
+    if (
+      this.$store.state.auth.name == "" &&
+      this.$store.state.auth.token != ""
+    ) {
+      this.$store.dispatch("auth/refreshLogin", this);
+    }
+    // });
   }
 };
 </script>
