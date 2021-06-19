@@ -8,8 +8,9 @@
         </q-avatar>
       </q-item-section>
       <q-item-section>
-        <q-item-label>{{ name }}</q-item-label>
-        <q-item-label caption>{{ title }} {{ department }}</q-item-label>
+        <q-item-label >{{ name }}</q-item-label>
+        <q-item-label caption>{{ title }}</q-item-label>
+        <q-item-label caption>{{ department }}</q-item-label>
       </q-item-section>
       <q-item-section side>
         <q-btn

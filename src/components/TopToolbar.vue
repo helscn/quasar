@@ -5,7 +5,7 @@
       <q-avatar>
         <img src="/icons/SYE.ico" />
       </q-avatar>
-      标题
+      项目跟进管理系统
     </q-toolbar-title>
   </q-toolbar>
 </template>
