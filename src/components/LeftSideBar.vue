@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <q-drawer show-if-above v-model="isShowLeft" side="left" :width="280" elevated>
     <q-item clickable v-ripple @click="test">
       <q-item-section top avatar>
         <q-avatar rounded size="48px">
@@ -25,7 +25,7 @@
       </q-item-section>
     </q-item>
     <q-separator spaced inset />
-  </div>
+  </q-drawer>
 </template>
 
 <script>
@@ -34,11 +34,6 @@ import { mapState } from "vuex";
 export default {
   name: "LeftSideBar",
   props: {},
-  data() {
-    return {
-      left: false
-    };
-  },
   methods: {
     test: function() {
       alert(this.$store.getters["auth/isLogined"]);
@@ -59,22 +54,31 @@ export default {
       }, 1500);
     }
   },
-  computed: mapState({
-    name: state => state.auth.name,
-    title: state => state.auth.title,
-    department: state => state.auth.department,
-    phone: state => state.auth.phone,
-    email: state => state.auth.email
-  }),
+  computed: {
+    ...mapState({
+      name: state => state.auth.name,
+      title: state => state.auth.title,
+      department: state => state.auth.department,
+      phone: state => state.auth.phone,
+      email: state => state.auth.email
+    }),
+    isShowLeft:{
+      get: function(){
+        return this.$store.state.isShowLeft
+      },
+      set: function(value){
+        this.$store.commit('setLeftSideBar',value)
+      }
+    }
+  },
+
   mounted: function() {
-    // this.$nextTick(function() {
     if (
       this.$store.state.auth.name == "" &&
       this.$store.state.auth.token != ""
     ) {
       this.$store.dispatch("auth/refreshLogin", this);
     }
-    // });
   }
 };
 </script>
