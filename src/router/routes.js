@@ -1,14 +1,18 @@
+import MainLayout from 'layouts/MainLayout'
+import TopToolbar from 'components/TopToolbar.vue'
+import LeftSideBar from 'components/LeftSideBar.vue'
+
 const routes = [
   {
     path: "/",
-    component: () => import("layouts/MainLayout.vue"),
+    component: MainLayout,
     children: [
       {
         path: "",
         components: {
           default: () => import("pages/Index.vue"),
-          toolbar: () => import("components/TopToolbar.vue"),
-          sidebar: () => import("components/LeftSideBar.vue")
+          toolbar: TopToolbar,
+          sidebar: LeftSideBar
         }
       }
     ]
