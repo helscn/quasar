@@ -18,12 +18,36 @@ const routes = [
     ]
   },
   {
-    path: "/login",
-    component: () => import("pages/Login.vue")
+    path: "/table",
+    component: MainLayout,
+    children: [
+      {
+        path: "",
+        components: {
+          default: () => import("pages/TableLayout.vue"),
+          toolbar: TopToolbar,
+          sidebar: LeftSideBar
+        }
+      }
+    ]
   },
   {
-    path: "/table",
-    component: () => import("layouts/TableLayout.vue")
+    path: "/test",
+    component: MainLayout,
+    children: [
+      {
+        path: "",
+        components: {
+          default: () => import("pages/TableLayout.vue"),
+          toolbar: TopToolbar,
+          sidebar: LeftSideBar
+        }
+      }
+    ]
+  },
+  {
+    path: "/login",
+    component: () => import("pages/Login.vue")
   },
 
   // Always leave this as last one,

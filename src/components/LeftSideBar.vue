@@ -1,58 +1,56 @@
 <template>
-  <q-drawer show-if-above v-model="isShowLeft" side="left" :width="280" elevated>
-    <q-item clickable v-ripple @click="test">
+  <q-drawer
+    show-if-above
+    v-model="isShowLeft"
+    side="left"
+    :width="250"
+    elevated
+  >
+    <q-item clickable v-ripple @click="showIndex">
       <q-item-section top avatar>
         <q-avatar rounded size="48px">
           <img src="/images/Avatar.png" />
-          <!-- <q-badge floating color="teal">Admin</q-badge> -->
         </q-avatar>
       </q-item-section>
       <q-item-section>
-        <q-item-label >{{ name }}</q-item-label>
+        <q-item-label>{{ name }}</q-item-label>
         <q-item-label caption>{{ title }}</q-item-label>
         <q-item-label caption>{{ department }}</q-item-label>
       </q-item-section>
-      <q-item-section side>
-        <q-btn
-          class="glossy"
-          round
-          color="deep-orange"
-          icon="logout"
-          size="sm"
-          @click.stop="logout"
-        >
-          <q-tooltip>退出</q-tooltip>
-        </q-btn>
-      </q-item-section>
     </q-item>
     <q-separator spaced inset />
+
+    <ProjectItem v-for="item in projectsList" :key="item.name" v-bind="item" />
+
   </q-drawer>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import ProjectItem from 'components/ProjectItem.vue'
 
 export default {
   name: "LeftSideBar",
-  props: {},
+  components: { ProjectItem },
+  data (){
+    return {
+      projectsList: [
+        {
+          name:'测试项目',
+          description:'这是项目描述，说明项目的背景及制作要求。',
+          path:'/table'
+        },
+        {
+          name:'Can you Mary me, my beautiful princess',
+          description:'这是一个测试，用于展示显示测试内容震左吉大南校大方地说安抚加大开发地地载需要在地革震奈斯。',
+          path:'/test'
+        }
+      ]
+    }
+  },
   methods: {
-    test: function() {
-      alert(this.$store.getters["auth/isLogined"]);
-    },
-    logout: function() {
-      let _this = this;
-      _this.$q.notify({
-        type: "warning",
-        position: "center",
-        icon: "announcement",
-        message: "已登出，正在跳转至登录界面...",
-        timeout: 500,
-        progress: true
-      });
-      setTimeout(() => {
-        _this.$store.commit("auth/logout");
-        _this.$router.push("/login");
-      }, 1500);
+    showIndex: function() {
+      this.$router.push("/");
     }
   },
   computed: {
@@ -63,12 +61,12 @@ export default {
       phone: state => state.auth.phone,
       email: state => state.auth.email
     }),
-    isShowLeft:{
-      get: function(){
-        return this.$store.state.isShowLeft
+    isShowLeft: {
+      get: function() {
+        return this.$store.state.isShowLeft;
       },
-      set: function(value){
-        this.$store.commit('setLeftSideBar',value)
+      set: function(value) {
+        this.$store.commit("setLeftSideBar", value);
       }
     }
   },
