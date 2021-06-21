@@ -18,13 +18,13 @@ const routes = [
     ]
   },
   {
-    path: "/table",
+    path: "/projects",
     component: MainLayout,
     children: [
       {
         path: "",
         components: {
-          default: () => import("pages/TableLayout.vue"),
+          default: () => import("pages/ProjectsView.vue"),
           toolbar: TopToolbar,
           sidebar: LeftSideBar
         }
@@ -32,7 +32,7 @@ const routes = [
     ]
   },
   {
-    path: "/test",
+    path: "/table",
     component: MainLayout,
     children: [
       {

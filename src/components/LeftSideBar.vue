@@ -21,32 +21,32 @@
     <q-separator spaced inset />
 
     <ProjectItem v-for="item in projectsList" :key="item.name" v-bind="item" />
-
   </q-drawer>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import ProjectItem from 'components/ProjectItem.vue'
+import ProjectItem from "components/ProjectItem.vue";
 
 export default {
   name: "LeftSideBar",
   components: { ProjectItem },
-  data (){
+  data() {
     return {
       projectsList: [
         {
-          name:'测试项目',
-          description:'这是项目描述，说明项目的背景及制作要求。',
-          path:'/table'
+          name: "测试项目",
+          description: "这是项目描述，说明项目的背景及制作要求。",
+          path: "/projects"
         },
         {
-          name:'Can you Mary me, my beautiful princess',
-          description:'这是一个测试，用于展示显示测试内容震左吉大南校大方地说安抚加大开发地地载需要在地革震奈斯。',
-          path:'/test'
+          name: "Can you Mary me, my beautiful princess",
+          description:
+            "这是一个测试，用于展示显示测试内容震左吉大南校大方地说安抚加大开发地地载需要在地革震奈斯。",
+          path: "/table"
         }
       ]
-    }
+    };
   },
   methods: {
     showIndex: function() {

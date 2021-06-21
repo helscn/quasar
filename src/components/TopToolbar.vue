@@ -5,9 +5,16 @@
       <q-avatar>
         <img src="/icons/SYE.ico" />
       </q-avatar>
-      项目跟进管理系统
+      {{ title }}
     </q-toolbar-title>
-    <q-btn class="glossy" round color="deep-orange" icon="logout" size="sm" @click.stop="logout">
+    <q-btn
+      class="glossy"
+      round
+      color="deep-orange"
+      icon="logout"
+      size="sm"
+      @click.stop="logout"
+    >
       <q-tooltip>退出</q-tooltip>
     </q-btn>
   </q-toolbar>
@@ -16,6 +23,11 @@
 <script>
 export default {
   name: "TopToolbar",
+  data() {
+    return {
+      title: "项目跟进管理系统"
+    };
+  },
   methods: {
     toggleLeftSideBar: function() {
       this.$store.commit("toggleLeftSideBar");
