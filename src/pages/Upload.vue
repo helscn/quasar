@@ -25,15 +25,13 @@
 export default {
   name: "Upload",
   methods: {
-    upload: function(file) {
-      return new Promise((resolve, reject) => {
-        const token = localStorage.getItem("Token");
-        resolve({
-          url: "http://localhost:5000/api/files",
-          method: "POST",
-          headers: [{ name: "Token", value: token }]
-        });
-      });
+    upload: function(files) {
+      const token = localStorage.getItem("Token");
+      return {
+        url: "http://localhost:5000/api/files",
+        method: "POST",
+        headers: [{ name: "Token", value: token }]
+      };
     }
   }
 };
