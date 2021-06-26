@@ -44,6 +44,11 @@ export default {
           description:
             "这是一个测试，用于展示显示测试内容震左吉大南校大方地说安抚加大开发地地载需要在地革震奈斯。",
           path: "/table"
+        },
+        {
+          name: "文件上传",
+          description: "这是一个测试，用于展示文件上传组件。",
+          path: "/upload"
         }
       ]
     };

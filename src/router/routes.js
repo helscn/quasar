@@ -1,6 +1,6 @@
-import MainLayout from 'layouts/MainLayout'
-import TopToolbar from 'components/TopToolbar.vue'
-import LeftSideBar from 'components/LeftSideBar.vue'
+import MainLayout from "layouts/MainLayout";
+import TopToolbar from "components/TopToolbar.vue";
+import LeftSideBar from "components/LeftSideBar.vue";
 
 const routes = [
   {
@@ -39,6 +39,20 @@ const routes = [
         path: "",
         components: {
           default: () => import("pages/TableLayout.vue"),
+          toolbar: TopToolbar,
+          sidebar: LeftSideBar
+        }
+      }
+    ]
+  },
+  {
+    path: "/upload",
+    component: MainLayout,
+    children: [
+      {
+        path: "",
+        components: {
+          default: () => import("pages/Upload.vue"),
           toolbar: TopToolbar,
           sidebar: LeftSideBar
         }
