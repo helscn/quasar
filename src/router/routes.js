@@ -1,6 +1,4 @@
 import MainLayout from "layouts/MainLayout";
-import TopToolbar from "components/TopToolbar.vue";
-import LeftSideBar from "components/LeftSideBar.vue";
 
 const routes = [
   {
@@ -9,53 +7,19 @@ const routes = [
     children: [
       {
         path: "",
-        components: {
-          default: () => import("pages/Index.vue"),
-          toolbar: TopToolbar,
-          sidebar: LeftSideBar
-        }
-      }
-    ]
-  },
-  {
-    path: "/projects",
-    component: MainLayout,
-    children: [
+        component: () => import("pages/Index.vue")
+      },
       {
-        path: "",
-        components: {
-          default: () => import("pages/ProjectsView.vue"),
-          toolbar: TopToolbar,
-          sidebar: LeftSideBar
-        }
-      }
-    ]
-  },
-  {
-    path: "/table",
-    component: MainLayout,
-    children: [
+        path: "projects",
+        component: () => import("pages/ProjectsView.vue")
+      },
       {
-        path: "",
-        components: {
-          default: () => import("pages/TableLayout.vue"),
-          toolbar: TopToolbar,
-          sidebar: LeftSideBar
-        }
-      }
-    ]
-  },
-  {
-    path: "/upload",
-    component: MainLayout,
-    children: [
+        path: "table",
+        component: () => import("pages/TableLayout.vue")
+      },
       {
-        path: "",
-        components: {
-          default: () => import("pages/Upload.vue"),
-          toolbar: TopToolbar,
-          sidebar: LeftSideBar
-        }
+        path: "upload",
+        component: () => import("pages/Upload.vue")
       }
     ]
   },
